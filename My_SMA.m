@@ -15,8 +15,8 @@ ub=ones(1,dim).*ub; % upper boundary
 z=0.03; % parameter
 
 %-----------------------------------changes---------------------------------------------------
+%init the archive 
 archive.vb = [];
-archive.Win_vb = [];
 archive.positions= [];
 archive.fitness = [];
 %---------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ while  it <= Max_iter
         X(i,:)=(X(i,:).*(~(Flag4ub+Flag4lb)))+ub.*Flag4ub+lb.*Flag4lb;
         AllFitness(i) = fobj(X(i,:));
     end
-    %--------------------------changes_start-------------------------------
+   
 
     
     
@@ -60,7 +60,8 @@ while  it <= Max_iter
         Destination_fitness = bestFitness;
     end
   %-----------------------------------changes_start------------------------------
-  archive.positions = [archive.positions;X];
+  %archive.positions = [archive.positions;X];
+  %add Allfitness to the archive
   archive.fitness = [archive.fitness ; AllFitness];
   
   
@@ -75,9 +76,11 @@ while  it <= Max_iter
       
         %best_vb  = archive.vb(best_index,:);
         %twenty_good_vb = best_vb(1:50,:) ;
+        
+        
         best_vb_not_zero_index =  archive.vb~=0;
         
-        twenty_vb_not_zero =archive.vb(best_vb_not_zero_index);
+        best_vb_not_zero =archive.vb(best_vb_not_zero_index);
             
     end
 
@@ -88,9 +91,9 @@ while  it <= Max_iter
     to_add_vb=zeros(N,dim);
     for i=1:N
         for j=1:dim
-            if ~isempty(archive.vb)&& ~isempty(twenty_vb_not_zero)
-                random = randi([1,length(twenty_vb_not_zero)]);
-                using_vb(i,j) = twenty_vb_not_zero(random);
+            if ~isempty(archive.vb)&& ~isempty(best_vb_not_zero)
+                random = randi([1,length(best_vb_not_zero)]);
+                using_vb(i,j) = best_vb_not_zero(random);
 
             else
                 a = atanh(-(it/Max_iter)+1);
