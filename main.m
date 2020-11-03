@@ -43,9 +43,9 @@ T=500; % Maximum number of iterations
 dimSize = 30;   %dimension size
 
 % Load details of the selected benchmark function
-[lb,ub,dim,fobj]=Get_Functions_SMA(Function_name,dimSize);
+[lb,ub,dim,fobj]=Get_Functions_MSMA(Function_name,dimSize);
 
-[Destination_fitness,bestPositions,Convergence_curve]=SMA(N,T,lb,ub,dim,fobj);
+[Destination_fitness,bestPositions,Convergence_curve]=MSMA(N,T,lb,ub,dim,fobj);
 
 
 %Draw objective space
